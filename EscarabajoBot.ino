@@ -16,6 +16,8 @@ Servo pataDelD;
 Servo pataTrasD;
 Servo pataDelI;
 Servo pataTrasI;
+// defino variable status
+String estado = "Iniciando";
 // pines sonar
 const int TRIG = 7;
 const int ECHO = 8;
@@ -74,16 +76,19 @@ void loop() {
     case 0:
       // detener
       detener();
+      estado = "Detenido";
       mySerial.println("detener Bot");
       break;
     case 1:
       // avanzar
       caminarDelante2();
+      estado = "Avanzando";
       mySerial.println("avanzar Bot");
       break;
     case 2:
       // retroceder();
       retroceder2(16);
+      estado = "Retrocediendo";
       mySerial.println("retroceder Bot");
       break;  
     case 5:
@@ -94,11 +99,13 @@ void loop() {
     case 6: 
       // girar derecha
       girarDerecha(10);
+      estado = "Giro derecha";
       mySerial.println("girar derecha Bot");
       break;
     case 7: 
       // girar izquierda
       girarIzquierda(10);
+      estado = "Giro izquierda";
       mySerial.println("girar izquierda Bot");
       break; 
     default:
@@ -257,6 +264,7 @@ void caminarDelante2(){ // camina para adelante mas rapido pero se ladea de cost
   delay(400);
 }
 void caminarDelante3(){ // camina para adelante mas rapido pero se ladea de costado
+  estado = "Avanzando";
   pataDelD.write(110);
   pataDelI.write(110);
   pataTrasD.write(60);  
@@ -308,6 +316,7 @@ void avanzarMasRapido(int intervalo){ // no retrocede vamos a tener que hacer ca
 }
 void retroceder2(int intervalo){ // no retrocede vamos a tener que hacer cambios radicales
   detener();
+  estado = "Retrocediendo";
   for(int i=0; i < intervalo; i++){ // las patas estan invertidas, las delanteras son traseras OJO!!!
     pataDelD.write(60);
     pataDelI.write(60);
@@ -335,6 +344,7 @@ void retroceder2(int intervalo){ // no retrocede vamos a tener que hacer cambios
 
 void detener(){
   // pone todos los motores en 90 grados
+  estado = "Detenido";
   pataDelD.write(90);
   pataTrasD.write(90);
   pataDelI.write(90);
@@ -353,7 +363,8 @@ void girar(int distancia){ // gira en forma random
   
 }
 // girar derecha
-void girarDerecha(int iter){  
+void girarDerecha(int iter){
+  estado = "Girar Derecha";  
   for (int i=0; i < iter; i++){
     // detenemos patas derechas  
     pataDelD.write(90);
@@ -376,6 +387,7 @@ void girarDerecha(int iter){
 }
 // girar izquierda
 void girarIzquierda(int iter){
+  estado = "Girar Izquierda";
   for (int i=0; i < iter; i++){
     // detenemos patas izquierda
     pataDelI.write(90);
