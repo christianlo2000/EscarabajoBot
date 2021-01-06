@@ -107,7 +107,11 @@ void loop() {
       girarIzquierda(10);
       estado = "Giro izquierda";
       mySerial.println("girar izquierda Bot");
-      break; 
+      break;
+    case 9: 
+      // ver estado de escarabajoBot
+      mySerial.println(estado);
+      break;   
     default:
       Serial.println("No ingresaste opcion");
       break;
